@@ -1,0 +1,8 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /summer
+#spring:
+#  thymeleaf:
+#    prefix: /templates
+#    suffix: .html
