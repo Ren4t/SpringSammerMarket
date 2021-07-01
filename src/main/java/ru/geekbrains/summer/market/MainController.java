@@ -23,10 +23,13 @@ public class MainController {
     }
 
     @GetMapping("/add")
-    public String addTwoNumAndShowResult(Model model, @RequestParam(name = "a") int a, @RequestParam(name = "b") int b) {
-        int result = a + b;
+    public String addTwoNumAndShowResult(Model model, @RequestParam(name = "a") int a,
+                                         @RequestParam(name = "b") int b,
+                                         @RequestParam(name = "c") int c ) {
+        int result = a + b + c;
         model.addAttribute("a",a);
         model.addAttribute("b",b);
+        model.addAttribute("c",c);
         model.addAttribute("addResult",result);
         return "result";
     }
