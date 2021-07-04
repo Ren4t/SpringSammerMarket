@@ -10,6 +10,7 @@ import java.util.List;
 
 @Controller
 public class MainController {
+
     @GetMapping("/showMeDemo")
     @ResponseBody
     public String demoMethod() {
@@ -18,7 +19,6 @@ public class MainController {
 
     @GetMapping("/page")
     public String showIndexPage() {
-
         return "index";
     }
 
@@ -69,4 +69,5 @@ public class MainController {
         System.out.println(user);
         return "redirect:/page";
     }
+
 }
