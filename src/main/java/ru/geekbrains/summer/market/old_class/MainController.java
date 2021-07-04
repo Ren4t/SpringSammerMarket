@@ -1,4 +1,4 @@
-package ru.geekbrains.summer.market;
+package ru.geekbrains.summer.market.old_class;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package ru.geekbrains.summer.market;
+package ru.geekbrains.summer.market.old_class;
 
 public class User {
     private Long id;

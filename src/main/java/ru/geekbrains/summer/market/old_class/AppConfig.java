@@ -1,4 +1,4 @@
-package ru.geekbrains.summer.market;
+package ru.geekbrains.summer.market.old_class;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
