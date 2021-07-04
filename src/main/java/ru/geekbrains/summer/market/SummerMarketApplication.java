@@ -1,4 +1,4 @@
-package ru.geekbrains.summer.market.old_class;
+package ru.geekbrains.summer.market;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
