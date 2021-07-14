@@ -1,13 +1,13 @@
-package ru.geekbrains.summer.market.old_class;
+package ru.geekbrains.summer.market.model;
 
 public class Product {
     private Long id;
-    private String name;
+    private String title;
     private int cost;
 
     public Product(Long id, String name, int cost) {
         this.id = id;
-        this.name = name;
+        this.title = name;
         this.cost = cost;
     }
 
@@ -19,12 +19,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getCost() {
@@ -39,7 +39,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
                 ", cost=" + cost +
                 '}';
     }
