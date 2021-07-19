@@ -11,16 +11,11 @@
 
 <body>
 <div class="container">
-    <h1>Add new product form</h1>
-    <!-- POST [http://localhost:8189/summer/]products/add?title=cola&price=100   -->
-    <form method="post" th:action="@{/products/add}">
-        title
-        <input type="text" name="title">
-        price
-        <input type="number" name="price">
-        <button class="btn btn-primary" type="submit">Create product</button>
-    </form>
-    <a class="btn btn-primary" th:href="@{/nav}">To Navigation Page</a>
+    <h1>Product info</h1>
+    <h3 th:text="${'ID: ' + product.id}"></h3>
+    <h3 th:text="${'Title: ' + product.title}"></h3>
+    <h3 th:text="${'Price: ' + product.price}"></h3>
+    <a class="btn btn-primary" th:href="@{/}">To Products Page</a>
 </div>
 </body>
 </html>
