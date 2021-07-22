@@ -3,6 +3,7 @@ package ru.geekbrains.summer.market.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.summer.market.dto.ProductDto;
 import ru.geekbrains.summer.market.model.Product;
 import ru.geekbrains.summer.market.services.ProductService;
 
@@ -10,27 +11,32 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
 
     // GET http://localhost:8189/summer
-    @GetMapping("/products")
-    public List<Product> showAllProducts() {
-        return productService.findAll();
+    @GetMapping
+    public Page<Product> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        return productService.findPage(pageIndex - 1, 10);
     }
 
-    @GetMapping("/product/{id}")
-    public Product showProduct(@PathVariable Long id){
-        return productService.findById(id);
+    @GetMapping("/{id}")
+    public ProductDto showProduct(@PathVariable Long id) {
+        return new ProductDto(productService.findById(id));
     }
 
-    @GetMapping("/delete/{id}")
-        public void deleteProduct(@PathVariable Long id){
-            productService.deleteById(id);
-        }
-    @GetMapping("/page")
-    public Page<Product> showPage(@RequestParam(name = "p") int pageIndex){
-        return productService.findPage(pageIndex -1, 10);
+    @PostMapping
+    public ProductDto crateNewProduct(@RequestBody ProductDto newProductDto) {
+        Product newProduct = new Product();
+        newProduct.setTitle(newProductDto.getTitle());
+        newProduct.setPrice(newProductDto.getPrice());
+        return new ProductDto(productService.save(newProduct));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        productService.deleteById(id);
     }
 
 }
