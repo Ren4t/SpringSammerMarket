@@ -21,6 +21,5 @@ values
 ('Butter',100),
 ('Boiled mushrooms',200),
 ('Spinach',150),
-('Fish',300),
-('Crab sticks',85);
+('Fish',300);
 
