@@ -3,6 +3,7 @@ package ru.geekbrains.summer.market.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.summer.market.dto.CategoryDto;
 import ru.geekbrains.summer.market.dto.ProductDto;
 import ru.geekbrains.summer.market.model.Category;
 import ru.geekbrains.summer.market.model.Product;
@@ -17,7 +18,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/{id}")
-    public Category findById(@PathVariable Long id) {
-        return categoryService.findById(id);
+    public CategoryDto findById(@PathVariable Long id) {
+        return new CategoryDto(categoryService.findById(id));
     }
 }

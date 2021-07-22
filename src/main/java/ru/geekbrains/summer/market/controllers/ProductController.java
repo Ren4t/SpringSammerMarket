@@ -8,6 +8,7 @@ import ru.geekbrains.summer.market.model.Product;
 import ru.geekbrains.summer.market.services.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
