@@ -13,10 +13,6 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
-    }
-
 
     public Product findById(Long id) {
         return productRepository.findById(id).get();
