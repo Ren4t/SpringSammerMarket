@@ -1,58 +1,46 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8189/summer'
-    // $scope.loadProducts = function () {
-    //     $http({
-    //         url: contextPath + '/api/v1/products',
-    //         method: 'GET',
-    //         params: {}
-    //     }).then(function (response) {
-    //         console.log(response);
-    //         //$scope.products = response.data;
-    //         $scope.loadPage($scope.page);
-    //     });
-    // };
+    const contextPath = 'http://localhost:8189/summer/api/v1';
 
-    $scope.loadPage = function (pageIndex) {
-        $scope.page = pageIndex;
+    $scope.loadPage = function (pageIndex = 1) {
         $http({
-            url: contextPath +  '/api/v1/products',
+            url: contextPath + '/products',
             method: 'GET',
             params: {
                 'p': pageIndex
             }
         }).then(function (response) {
-            console.log(response);
             $scope.productsPage = response.data;
-            $scope.navList = $scope.generatePagesIndexes(1,$scope.productsPage.totalPages)
+            $scope.navList = $scope.generatePagesIndexes(1, $scope.productsPage.totalPages);
+            console.log(response.data);
         });
     };
 
-
-    $scope.showProductInfo = function (productIndex) {
+    $scope.loadCart = function () {
         $http({
-            url: contextPath + '/api/v1/products/' + productIndex,
+            url: contextPath + '/cart',
             method: 'GET'
         }).then(function (response) {
-            alert(response.data.title);
+            $scope.cart = response.data;
         });
-    };
+    }
 
-    $scope.deleteProduct = function (productIndex) {
-            $http({
-                url: contextPath + '/api/v1/products/' + productIndex,
-                method: 'DELETE'
-            }).then(function (response) {
-                $scope.loadPage();
-            });
-        };
+    $scope.addToCart = function (productId) {
+        $http({
+            url: contextPath + '/cart/add/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
 
-    $scope.generatePagesIndexes = function(startPage, endPage){
+    $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
         for (let i = startPage; i < endPage + 1; i++) {
-            arr.push(i);        
+            arr.push(i);
         }
         return arr;
     }
 
     $scope.loadPage();
+    $scope.loadCart();
 });

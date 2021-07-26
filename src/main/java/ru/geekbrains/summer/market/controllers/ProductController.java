@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.summer.market.dto.ProductDto;
 import ru.geekbrains.summer.market.model.Product;
 import ru.geekbrains.summer.market.services.ProductService;
-
-import java.util.List;
+import ru.geekbrains.summer.market.exceptions.ResourceNotFoundException;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,28 +14,27 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    // GET http://localhost:8189/summer
-    @GetMapping
-    public Page<Product> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex) {
-        return productService.findPage(pageIndex - 1, 10);
+    @GetMapping(value = "/{id}")
+    public ProductDto findById(@PathVariable Long id) {
+        Product p = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
+        return new ProductDto(p);
     }
 
-    @GetMapping("/{id}")
-    public ProductDto showProduct(@PathVariable Long id) {
-        return new ProductDto(productService.findById(id));
+    @GetMapping
+    public Page<ProductDto> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        return productService.findPage(pageIndex - 1, 5).map(ProductDto::new);
     }
 
     @PostMapping
-    public ProductDto crateNewProduct(@RequestBody ProductDto newProductDto) {
-        Product newProduct = new Product();
-        newProduct.setTitle(newProductDto.getTitle());
-        newProduct.setPrice(newProductDto.getPrice());
-        return new ProductDto(productService.save(newProduct));
+    public ProductDto createNewProduct(@RequestBody ProductDto newProductDto) {
+        Product product = new Product();
+        product.setPrice(newProductDto.getPrice());
+        product.setTitle(newProductDto.getTitle());
+        return new ProductDto(productService.save(product));
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
     }
-
 }

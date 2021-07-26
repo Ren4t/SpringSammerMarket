@@ -56,4 +56,3 @@ values
 ('Boiled mushrooms',200,1),
 ('Spinach',150,1),
 ('Fish',300,1);
-

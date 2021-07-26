@@ -18,8 +18,8 @@
         <thead>
         <tr>
             <td>ID</td>
-            <td>Title</td>
-            <td>Price</td>
+            <td>Название</td>
+            <td>Цена</td>
             <td></td>
         </tr>
         </thead>
@@ -29,8 +29,7 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="showProductInfo(p.id)">Info</button>
-                <button class="btn btn-primary" ng-click="deleteProduct(p.id)">Delete</button>
+                <button class="btn btn-primary" ng-click="addToCart(p.id)">В корзину</button>
             </td>
         </tr>
         </tbody>
@@ -40,10 +39,33 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li ng-repeat="p in navList" class="page-item">
-            <a class="page-link" ng-click="loadPage(p)">{{p}}</a>
+                <a class="page-link" ng-click="loadPage(p)">{{p}}</a>
             </li>
         </ul>
     </nav>
+
+    <p></p>
+    <h3>Корзина</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Количество</td>
+            <td>Цена</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="oi in cart.items">
+            <td>{{oi.productTitle}}</td>
+            <td>{{oi.quantity}}</td>
+            <td>{{oi.quantity + ' x ' + oi.pricePerProduct + ' = ' + oi.price}}</td>
+            <td>
+                <button class="btn btn-danger">Удалить (X)</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 

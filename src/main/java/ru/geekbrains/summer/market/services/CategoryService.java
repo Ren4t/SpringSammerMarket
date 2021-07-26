@@ -10,13 +10,14 @@ import ru.geekbrains.summer.market.repositories.CategoryRepository;
 import ru.geekbrains.summer.market.repositories.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public Category findById(Long id) {
-        return categoryRepository.findById(id).get();
+    public Optional<Category> findById(Long id) {
+        return categoryRepository.findById(id);
     }
 }
