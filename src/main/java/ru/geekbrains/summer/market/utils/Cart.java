@@ -25,16 +25,14 @@ public class Cart {
         this.price = BigDecimal.ZERO;
     }
 
-    public void clear() {
-        items.clear();
-        price = BigDecimal.ZERO;
-    }
-
-    public boolean add(Long productId) {
+    public boolean add(Long productId, Integer amount) {
         for (OrderItemDto o : items) {
             if (o.getProductId().equals(productId)) {
-                o.changeQuantity(1);
+                o.changeQuantity(amount);
                 recalculate();
+                if(o.getQuantity() == 0) {
+                    deleteById(productId);
+                }
                 return true;
             }
         }
@@ -44,6 +42,21 @@ public class Cart {
     public void add(Product product) {
         items.add(new OrderItemDto(product));
         recalculate();
+    }
+
+    public void deleteById(Long productId) {
+        for (int i = 0; i < items.size();) {
+            if(items.get(i).getProductId().equals(productId)){
+                items.remove(i);
+                continue;
+            }else i++;
+        }
+        recalculate();
+    }
+
+    public void clear() {
+        items.clear();
+        price = BigDecimal.ZERO;
     }
 
     private void recalculate() {

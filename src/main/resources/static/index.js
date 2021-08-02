@@ -15,6 +15,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     };
 
+
     $scope.loadCart = function () {
         $http({
             url: contextPath + '/cart',
@@ -24,10 +25,28 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     }
 
-    $scope.addToCart = function (productId) {
+    $scope.addToCart = function (productId,amount) {
         $http({
-            url: contextPath + '/cart/add/' + productId,
+            url: contextPath + '/cart/add/' + productId + '/' + amount,
             method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
+
+    $scope.deleteItem = function (productId) {
+        $http({
+            url: contextPath + '/cart/' + productId,
+            method: 'DELETE'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
+
+    $scope.clearCart = function () {
+        $http({
+            url: contextPath + '/cart',
+            method: 'DELETE'
         }).then(function (response) {
             $scope.loadCart();
         });

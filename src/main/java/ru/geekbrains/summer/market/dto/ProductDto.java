@@ -20,4 +20,11 @@ public class ProductDto {
         this.categoryTitle = product.getCategory().getTitle();
         this.price = product.getPrice();
     }
+
+    public ProductDto(Long id, String title, String categoryTitle, BigDecimal price) {
+        this.id = id;
+        this.title = title;
+        this.categoryTitle = categoryTitle;
+        this.price = price;
+    }
 }
