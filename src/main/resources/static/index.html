@@ -29,7 +29,7 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="addToCart(p.id)">В корзину</button>
+                <button class="btn btn-primary" ng-click="addToCart(p.id,1)">В корзину</button>
             </td>
         </tr>
         </tbody>
@@ -56,16 +56,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="oi in cart.items">
+        <tr ng-repeat="oi in cart.items"> 
             <td>{{oi.productTitle}}</td>
-            <td>{{oi.quantity}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="addToCart(oi.productId,-1)">-</button>
+                {{oi.quantity}}
+                <button class="btn btn-primary" ng-click="addToCart(oi.productId,1)">+</button>
+            </td>
             <td>{{oi.quantity + ' x ' + oi.pricePerProduct + ' = ' + oi.price}}</td>
             <td>
-                <button class="btn btn-danger">Удалить (X)</button>
+                <button class="btn btn-danger" ng-click="deleteItem(oi.productId)">Удалить (X)</button>
             </td>
         </tr>
         </tbody>
     </table>
+    <h4>Итого {{cart.price}}     <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button></h4>
+
 </div>
 </body>
 
