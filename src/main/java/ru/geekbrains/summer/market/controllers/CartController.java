@@ -25,11 +25,12 @@ public class  CartController {
             cart.add(productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Unable add product to cart. Product not found id: " + productId)));
         }
     }
-    @DeleteMapping("/{productId}")
+    @GetMapping("/deleteId/{productId}")
     public void deleteById(@PathVariable Long productId){
         cart.deleteById(productId);
     }
-    @DeleteMapping
+
+    @GetMapping("/clear")
     public  void deleteAll(){
         cart.clear();
     }

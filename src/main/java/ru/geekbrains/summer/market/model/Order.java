@@ -2,28 +2,31 @@ package ru.geekbrains.summer.market.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "categories")
-@Data
 @NoArgsConstructor
-public class Category {
+@Data
+@Entity
+@Table(name = "orders")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @OneToMany(mappedBy = "order")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<OrderItem> items;
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    @Column(name="price")
+    private BigDecimal price;
 
     @CreationTimestamp
     @Column(name = "created_at")

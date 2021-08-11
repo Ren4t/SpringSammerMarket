@@ -6,24 +6,35 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Entity
-@Table(name = "categories")
-@Data
 @NoArgsConstructor
-public class Category {
+@Data
+@Entity
+@Table(name = "order_items")
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @Column(name="price_per_product")
+    private BigDecimal pricePerProduct;
+
+    @Column(name="price")
+    private BigDecimal price;
+
+    @Column(name="quantity")
+    private int quantity;
 
     @CreationTimestamp
     @Column(name = "created_at")
