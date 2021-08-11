@@ -1,3 +1,8 @@
+create table cart
+(
+    id         bigserial primary key,
+    product varchar(255)
+);
 
 create table categories
 (
