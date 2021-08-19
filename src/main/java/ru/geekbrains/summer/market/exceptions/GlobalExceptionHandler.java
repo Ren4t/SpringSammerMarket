@@ -11,4 +11,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> catchResourceNotFoundException(ResourceNotFoundException e) {
         return new ResponseEntity<>(new MarketError(HttpStatus.NOT_FOUND.value(),e.getMessage()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> catchInvalidInputDataException(InvalidInputDateException e) {
+        return new ResponseEntity<>(new MarketError(e.getMessages()), HttpStatus.BAD_REQUEST);
+    }
 }

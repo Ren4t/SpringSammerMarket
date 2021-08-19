@@ -44,7 +44,7 @@ public class ProductController {
     @GetMapping
     public Page<ProductDto> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex) {
         //return productService.findPage(pageIndex - 1, 5).map(ProductDto::new);
-        return productService.findPage(pageIndex -1,5).map(mapEntityToDto);
+        return productService.findPage(pageIndex - 1,10).map(mapEntityToDto);
     }
 
     @PostMapping

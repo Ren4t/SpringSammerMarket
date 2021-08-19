@@ -1,58 +1,63 @@
-//package ru.geekbrains.summer.market.configs;
-//
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.core.userdetails.UserDetailsPasswordService;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-//import ru.geekbrains.summer.market.services.UserService;
-//
-//@EnableWebSecurity
-//@RequiredArgsConstructor
-//@Slf4j
-////@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//    private final UserService userService;
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        log.info ("Dao Authentication Provider");
-//        http.authorizeRequests()
-//                .antMatchers("/auth_page/**").authenticated()
+package ru.geekbrains.summer.market.configs;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@EnableWebSecurity
+@RequiredArgsConstructor
+@Slf4j
+//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final JwtRequestFilter jwtRequestFilter;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        //log.info ("Dao Authentication Provider");
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/orders/**").authenticated()
 //                .antMatchers("/user_info").authenticated()
 //                .antMatchers("/user_read_all_message").hasAnyAuthority("READ_ALL_MESSAGE")
 //                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPERADMIN")
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin()//httpBasic()
-//                .and()
-//                .sessionManagement()
-//                .maximumSessions(1)
-//                .maxSessionsPreventsLogin(true);
-//    }
-//
-////    @Bean
-////    public BCryptPasswordEncoder passwordEncoder() {
-////        return new BCryptPasswordEncoder();
-////    }
-//
+                .antMatchers("/h2-console/**").permitAll()
+                .anyRequest().permitAll()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .headers().frameOptions().disable()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
 //    @Bean
-//    public MyPass passwordEncoder() {
-//        return new MyPass();
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
 //    }
-//
-//    @Bean
-//    public DaoAuthenticationProvider daoAuthenticationProvider() {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        authenticationProvider.setUserDetailsService(userService);
-//        return authenticationProvider;
-//    }
-//}
+
+    @Bean
+    public MyPass passwordEncoder() {
+        return new MyPass();
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+}

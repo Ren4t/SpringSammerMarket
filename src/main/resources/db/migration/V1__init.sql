@@ -3,12 +3,16 @@ create table users (
     username varchar(30) not null unique,
     password varchar(80) not null,
     email varchar(50) unique,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
     primary key (id)
 );
 
 create table roles (
     id serial,
     name varchar(50) not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
     primary key (id)
 );
 
@@ -99,6 +103,9 @@ create table orders
 (
     id         bigserial primary key,
     price     numeric(8, 2) not null,
+    user_id   bigint references users (id),
+    address   varchar(255),
+    phone     varchar(32),
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );

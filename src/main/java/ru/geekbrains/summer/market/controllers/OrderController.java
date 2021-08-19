@@ -1,14 +1,17 @@
 package ru.geekbrains.summer.market.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.summer.market.dto.OrderDto;
+import ru.geekbrains.summer.market.exceptions.InvalidInputDateException;
+import ru.geekbrains.summer.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.summer.market.model.Order;
+import ru.geekbrains.summer.market.model.User;
 import ru.geekbrains.summer.market.services.OrderService;
+import ru.geekbrains.summer.market.services.UserService;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,10 +21,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final UserService userService;
 
     @PostMapping
-    public void createOrder(){
-        orderService.createOrder();
+    public void createOrder(Principal principal, @RequestParam String address, @RequestParam String phone) {
+        List<String> errors = new ArrayList<>();
+        if(address.isBlank()){
+            errors.add("Field 'address' cannot be null");
+        }
+        if(phone.isBlank()){
+            errors.add("Field 'phone' cannot be null");
+        }
+        if(!errors.isEmpty()){
+            throw new InvalidInputDateException(errors);
+        }
+        User user = userService.findUserByUsername(principal.getName())
+                .orElseThrow(()-> new ResourceNotFoundException("Unable to create order. User not found"));
+        orderService.createOrder(user, address, phone);
     }
 
     @GetMapping
