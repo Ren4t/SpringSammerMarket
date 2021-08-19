@@ -1,3 +1,4 @@
+
 create table users (
     id bigserial,
     username varchar(30) not null unique,
@@ -40,6 +41,13 @@ values
 (2, 1),
 (2, 2),
 (2, 3);
+
+create table cart
+(
+    id         bigserial primary key,
+    product varchar(255)
+);
+
 
 create table categories
 (
