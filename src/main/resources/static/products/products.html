@@ -1,4 +1,21 @@
 <div>
+
+    <form novalidate ng-submit="loadPage()">
+        <div class="form-group col-md-6">
+            <label for="minPriceField">Минимальная цена</label>
+            <input class="form-control" type="number" ng-model="product_filter.minPrice" id="minPriceField">
+        </div>
+        <p></p>
+        <div class="form-group col-md-6">
+            <label for="titleField">Название товара</label>
+            <input class="form-control" type="text" ng-model="product_filter.title" id="titleField">
+        </div>
+        <p></p>
+        <div>
+            <button  class="btn btn-primary" type="submit">Применить фильтр</button>
+        </div>
+    </form>
+
     <table class="table">
         <thead>
         <tr>
