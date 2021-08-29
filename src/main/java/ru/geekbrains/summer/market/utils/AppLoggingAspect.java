@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class AppLoggingAspect {
     private final Statistic statistic;
 
-    @Around("execution(public * ru.geekbrains.summer.market.services.OrderService.*(..))")
+    @Around("execution(public * ru.geekbrains.summer.market.services.*Service.*(..))")
     public Object methodProfilingOrderService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         System.out.println("start profiling");
         long begin = System.currentTimeMillis();
@@ -23,31 +23,20 @@ public class AppLoggingAspect {
         long duration = end - begin;
         System.out.println((MethodSignature) proceedingJoinPoint.getSignature() + " duration: " + duration);
         System.out.println("end profiling");
-        statistic.buildStatistic("OrderService",duration);
+        statistic.buildStatistic(proceedingJoinPoint.getSignature().getName(),duration);
         return out;
     }
-    @Around("execution(public * ru.geekbrains.summer.market.services.ProductService.*(..))")
-    public Object methodProfilingProductService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("start profiling");
-        long begin = System.currentTimeMillis();
-        Object out = proceedingJoinPoint.proceed();
-        long end = System.currentTimeMillis();
-        long duration = end - begin;
-        System.out.println((MethodSignature) proceedingJoinPoint.getSignature() + " duration: " + duration);
-        System.out.println("end profiling");
-        statistic.buildStatistic("ProductService",duration);
-        return out;
-    }
-    @Around("execution(public * ru.geekbrains.summer.market.services.UserService.*(..))")
-    public Object methodProfilingUserService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("start profiling");
-        long begin = System.currentTimeMillis();
-        Object out = proceedingJoinPoint.proceed();
-        long end = System.currentTimeMillis();
-        long duration = end - begin;
-        System.out.println((MethodSignature) proceedingJoinPoint.getSignature() + " duration: " + duration);
-        System.out.println("end profiling");
-        statistic.buildStatistic("UserService",duration);
-        return out;
-    }
+
+//    @Around("execution(public * ru.geekbrains.summer.market.services.UserService.*(..))")
+//    public Object methodProfilingUserService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+//        System.out.println("start profiling");
+//        long begin = System.currentTimeMillis();
+//        Object out = proceedingJoinPoint.proceed();
+//        long end = System.currentTimeMillis();
+//        long duration = end - begin;
+//        System.out.println((MethodSignature) proceedingJoinPoint.getSignature() + " duration: " + duration);
+//        System.out.println("end profiling");
+//        statistic.buildStatistic("UserService",duration);
+//        return out;
+//    }
 }
