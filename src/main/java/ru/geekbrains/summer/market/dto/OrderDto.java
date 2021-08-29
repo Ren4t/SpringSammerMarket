@@ -23,7 +23,7 @@ public class OrderDto {
         this.address = order.getAddress();
         this.phone = order.getPhone();
         this.price = order.getPrice();
-        this.items = order.getItems().stream().map(orderItem -> new OrderItemDto()).collect(Collectors.toList());
+        this.items = order.getItems().stream().map(orderItem -> new OrderItemDto(orderItem)).collect(Collectors.toList());
     }
 
 }

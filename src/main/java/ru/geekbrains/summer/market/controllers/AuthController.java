@@ -28,7 +28,7 @@ public class AuthController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException ex) {
-            return new ResponseEntity<>(new MarketError(HttpStatus.UNAUTHORIZED.value(),"Incorrect username or password"),HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new MarketError("Incorrect username or password"),HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);

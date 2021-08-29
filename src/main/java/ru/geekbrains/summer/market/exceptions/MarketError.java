@@ -10,21 +10,17 @@ import java.util.List;
 @NoArgsConstructor
 public class MarketError {
     private int status;
-    private List<String> message;
+    private List<String> messages;
     private Date timestamp;
 
-    public MarketError(int status, String message) {
-        this(List.of(message));
-        this.status = status;
-    }
     public MarketError(String message) {
         this(List.of(message));
     }
     public MarketError(String ...  messages) {
         this(List.of(messages));
     }
-    public MarketError(List<String> message) {
-        this.message = message;
+    public MarketError(List<String> messages) {
+        this.messages = messages;
         this.timestamp = new Date();
     }
 

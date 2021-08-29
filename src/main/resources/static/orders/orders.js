@@ -7,7 +7,7 @@ angular.module('app').controller('ordersController', function ($scope, $http, $l
             method: 'GET'
         }).then(function (response) {
            $scope.orders = response.data;
-           console.log(response.data);
+           console.log($scope.orders);
         });
     }
 

@@ -6,7 +6,9 @@ angular.module('app').controller('productsController', function ($scope, $http, 
             url: contextPath + '/api/v1/products',
             method: 'GET',
             params: {
-                'p': pageIndex
+                'p': pageIndex,
+                'min_price': $scope.product_filter ? $scope.product_filter.minPrice : null,
+                'title': $scope.product_filter ? $scope.product_filter.title : null
             }
         }).then(function (response) {
             $scope.productsPage = response.data;

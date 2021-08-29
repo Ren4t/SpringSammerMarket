@@ -46,9 +46,12 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
                 phone: $scope.order_info.phone,
                 address: $scope.order_info.address
             }
-        }).then(function (response) {
-           alert('Заказ создан');
-           $scope.loadCart();
+        }).then(function successCallback(response) {
+            alert('Заказ создан');
+            $scope.loadCart();
+        }, function errorCallback(response) {
+            alert(response.data.messages);
+            console.log(response.data.messages);
         });
     }
     $scope.loadCart();
