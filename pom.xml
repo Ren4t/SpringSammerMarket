@@ -11,7 +11,7 @@
 	<groupId>ru.geekbrains.summer.marker</groupId>
 	<artifactId>summer-market</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<title>summer-market</title>
+	<name>summer-market</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -102,6 +102,27 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.5.0</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sources>
+						<source>${project.basedir}/src/main/resources/products.xsd</source>
+					</sources>
+					<!--					<packageName>soap</packageName>-->
+					<!--					<outputDirectory>${project.basedir}/src/main/java/com/flamexander/spring/ws/soap</outputDirectory>-->
+					<!--					<clearOutputDir>false</clearOutputDir>-->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

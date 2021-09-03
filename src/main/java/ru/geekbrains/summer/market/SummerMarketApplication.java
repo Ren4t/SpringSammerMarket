@@ -5,7 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SummerMarketApplication {
- //черновик домашнее задание 16
+ // Домашнее задание:
+	// 1. Добавить к магазину возможность выгрузки всех товаров,
+	// и отдельных товаров по id через SOAP
 //
 //	 План по магазину:
 //	 1. Привязка корзины к пользователю, подключение Reddis
